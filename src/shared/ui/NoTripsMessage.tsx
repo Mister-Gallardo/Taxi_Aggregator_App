@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import React from "react";
 
 const NoTripsMessage: React.FC = () => (
-  <Typography variant="h5" sx={{ margin: 10 }}>
+  <Typography variant="h5" sx={{ margin: 10, textAlign: 'center' }}>
     По заданным параметрам поездок нет
   </Typography>
 );
