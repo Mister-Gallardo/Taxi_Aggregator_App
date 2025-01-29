@@ -1,50 +1,61 @@
-# React + TypeScript + Vite
+# Агрегатор такси
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание
 
-Currently, two official plugins are available:
+Приложение агрегатора такси позволяет пассажирам быстро добавлять запросы на поездки, а водителям обрабатывать эти заказы. Интерфейс прост и удобен в использовании.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Основные функции
 
-## Expanding the ESLint configuration
+- Добавление заказа на поездку для пассажира
+- Выбор тарифа (Комфорт, Бизнес и др.)
+- Выбор региона и пунктов маршрута
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Технологии
 
-- Configure the top-level `parserOptions` property like this:
+- **React (Vite)** — для быстрой разработки и рендеринга
+- **TypeScript** — для статической типизации
+- **Material UI (MUI)** — создание удобного UI
+- **React Testing Library (RTL)** — для проверки работоспособности
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Инструкция по установке
+
+1. Склонируйте репозиторий:
+
+   ```bash
+   git clone https://github.com/Mister-Gallardo/Taxi_Aggregator_App
+   ```
+
+2. Перейдите в каталог с проектом:
+
+   ```bash
+   cd Taxi_Aggregator_App
+   ```
+
+3. Установите зависимости:
+
+   ```bash
+   npm install
+   ```
+
+4. Запустите приложение в режиме разработки:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Откройте [http://localhost:5173/Taxi_Aggregator_App/](http://localhost:5173/Taxi_Aggregator_App/) в браузере.
+
+## Тестирование
+
+Для запуска тестов введите:
+
+```bash
+npm test
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+**Важно:** На данный момент тесты не являются полностью работоспособными (не работает тест PassengerPage.test.tsx) и могут не проходить из-за проблем с обработкой сложных UI-элементов.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Ошибки и решения
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- Если тесты не проходят из-за необнаруженных текстовых элементов, проверьте корректность данных в DOM.
+- Если возникают проблемы с запуском, удалите папку node_modules и выполните npm install.
