@@ -6,12 +6,20 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Stack spacing={3} alignItems="center" mt='18vh'>
+    <Stack spacing={3} alignItems="center" mt="18vh">
       <Typography variant="h3">Выберите роль</Typography>
-      <Button sx={{fontSize: '18px', fontWeight: 'bold', padding: '10px 50px'}} variant="contained" onClick={() => navigate("/passenger")}>
+      <Button
+        sx={{ fontSize: "18px", fontWeight: "bold", padding: "10px 50px" }}
+        variant="contained"
+        onClick={() => navigate("/passenger")}
+      >
         Я пассажир
       </Button>
-      <Button sx={{fontSize: '18px', fontWeight: 'bold', padding: '10px 50px'}} variant="outlined" onClick={() => navigate("/driver")}>
+      <Button
+        sx={{ fontSize: "18px", fontWeight: "bold", padding: "10px 50px" }}
+        variant="outlined"
+        onClick={() => navigate("/driver")}
+      >
         Я водитель
       </Button>
     </Stack>

@@ -1,11 +1,11 @@
-export interface ITrip {
-    id: number;
-    region: string;
-    from: string;
-    to: string;
-    tariff: string;
-    status: 'active' | 'inactive';
-}
+import { ITrip } from "../entities/Trip/Trip.types";
+
+export const regions = [
+    "Московская область",
+    "Челябинская область",
+    "Астраханская область",
+    "Башкортостан",
+];
 
 export const store = {
     get: function () {
@@ -14,8 +14,8 @@ export const store = {
         if (localStore) {
             return JSON.parse(localStore)
         } else {
-            this.set(trips);
-            return trips
+            this.set(initialTrips);
+            return initialTrips;
         }
     },
 
@@ -24,111 +24,111 @@ export const store = {
     }
 }
 
-const trips: ITrip[] = [
+const initialTrips: ITrip[] = [
     {
         id: 1,
-        region: "Москва",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Красная площадь",
         to: "ВДНХ",
         tariff: "Комфорт",
-        status: 'active'
+        status: 'Активные'
     },
     {
         id: 2,
-        region: "Санкт-Петербург",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Невский проспект",
         to: "Эрмитаж",
         tariff: "Эконом",
-        status: 'active',
+        status: 'Активные',
     },
-    { id: 3, region: "Казань", from: "Кремль", to: "Аэропорт", tariff: "Бизнес", status: 'active' },
+    { id: 3, region: regions[Math.round(Math.random() * 10) % 4], from: "Кремль", to: "Аэропорт", tariff: "Бизнес", status: 'Завершенные' },
     {
         id: 4,
-        region: "Уфа",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Проспект Октября",
         to: "Железнодорожный вокзал",
         tariff: "Комфорт",
-        status: 'inactive'
+        status: 'Активные'
     },
-    { id: 5, region: "Москва", from: "Арбат", to: "МГУ", tariff: "Бизнес", status: 'inactive' },
+    { id: 5, region: regions[Math.round(Math.random() * 10) % 4], from: "Арбат", to: "МГУ", tariff: "Бизнес", status: 'Завершенные' },
     {
         id: 6,
-        region: "Санкт-Петербург",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Петропавловская крепость",
         to: "Казанский собор",
         tariff: "Комфорт",
-        status: 'active'
+        status: 'Активные'
     },
     {
         id: 7,
-        region: "Казань",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Аметьево",
         to: "Театр Камала",
         tariff: "Эконом",
-        status: 'active'
+        status: 'Активные'
     },
     {
         id: 8,
-        region: "Уфа",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "ТЦ Планета",
         to: "Аэропорт Уфы",
         tariff: "Бизнес",
-        status: 'inactive'
+        status: 'Завершенные'
     },
     {
         id: 9,
-        region: "Москва",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Воробьевы горы",
         to: "Парк Горького",
         tariff: "Эконом",
-        status: 'inactive'
+        status: 'Завершенные'
     },
     {
         id: 10,
-        region: "Санкт-Петербург",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Лахта Центр",
         to: "Дворцовая площадь",
         tariff: "Бизнес",
-        status: 'active'
+        status: 'Активные'
     },
     {
         id: 11,
-        region: "Казань",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Метро Козья Слобода",
         to: "Центр семьи Казань",
         tariff: "Комфорт",
-        status: 'active'
+        status: 'Завершенные'
     },
     {
         id: 12,
-        region: "Уфа",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Проспект Салавата",
         to: "Конгресс-холл",
         tariff: "Эконом",
-        status: 'active'
+        status: 'Завершенные'
     },
     {
         id: 13,
-        region: "Москва",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Третьяковская галерея",
         to: "Останкинская башня",
         tariff: "Комфорт",
-        status: 'inactive'
+        status: 'Завершенные'
     },
     {
         id: 14,
-        region: "Санкт-Петербург",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Зимний дворец",
         to: "Аврора",
         tariff: "Эконом",
-        status: 'inactive'
+        status: 'Завершенные'
     },
     {
         id: 15,
-        region: "Уфа",
+        region: regions[Math.round(Math.random() * 10) % 4],
         from: "Башкирский театр",
         to: "ТЦ Мега",
         tariff: "Бизнес",
-        status: 'active'
+        status: 'Активные'
     },
 ];

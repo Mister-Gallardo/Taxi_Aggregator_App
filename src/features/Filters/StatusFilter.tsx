@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const Filter: React.FC<{
+const StatusFilter: React.FC<{
   filter: string;
   handleChangeFilter: (e: SelectChangeEvent) => void;
 }> = ({
@@ -25,12 +25,14 @@ const Filter: React.FC<{
       inputProps={{ "aria-label": "Without label" }}
       size="small"
     >
-      <MenuItem value="all">Все</MenuItem>
-      <MenuItem value="active">Активные</MenuItem>
-      <MenuItem value="inactive">Завершенные</MenuItem>
+      {["Все", "Активные", "Завершенные"].map((status) => (
+        <MenuItem key={status} value={status}>
+          {status}
+        </MenuItem>
+      ))}
     </Select>
-    <FormHelperText>Фильтрация</FormHelperText>
+    <FormHelperText>Статус</FormHelperText>
   </Box>
 );
 
-export default Filter;
+export default StatusFilter;

@@ -1,0 +1,15 @@
+export const modalStyle = {
+    position: "absolute" as const,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "40vw",
+    minWidth: 300,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
