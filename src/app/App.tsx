@@ -1,8 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home/ui/Home';
-import PassengerPage from './pages/PassengerPage/ui/PassengerPage';
-import DriverPage from './pages/DriverPage/ui/DriverPage';
-import './App.css';
+import Home from '../pages/Home/ui/Home';
+import PassengerPage from '../pages/PassengerPage/ui/PassengerPage';
+import DriverPage from '../pages/DriverPage/ui/DriverPage';
 
 function App() {
   return (

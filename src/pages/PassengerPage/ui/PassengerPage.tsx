@@ -1,80 +1,38 @@
-import {
-  Box,
-  Button,
-  InputLabel,
-  MenuItem,
-  Modal,
-  NativeSelect,
-  Pagination,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import TripCard from "./TripCard";
-import { ITrip, store } from "../lib/Data";
+import { Box, Button, SelectChangeEvent, Typography } from "@mui/material";
+import React, { useState } from "react";
+import TripCard from "../../../shared/ui/TripCard";
+import { ITrip, store } from "../../../app/store";
+import PaginationComponent from "../../../shared/ui/Pagination";
+import PreviousButton from "../../../shared/ui/PreviousButton";
+import Filter from "../../../shared/ui/Filter";
+import ModalComponent from "./ModalComponent";
 
-const modalStyle = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "40vw",
-  minWidth: 300,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 2,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-};
+// вынесем за комопонент, чтоб get() не вызывался при каждом рендене
+const trips: ITrip[] = store.get();
 
 const PassengerPage: React.FC = () => {
+  const [filter, setFilter] = useState("all");
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
 
-  const regionRef = useRef<HTMLInputElement>(null);
-  const fromRef = useRef<HTMLInputElement>(null);
-  const toRef = useRef<HTMLInputElement>(null);
-  const tariffRef = useRef<HTMLSelectElement>(null);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-
-  }, [])
-
-  const trips: ITrip[] = store.get();
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentTrips: ITrip[] = trips.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(trips.length / itemsPerPage);
+  const filteredTrips =
+    filter === "all"
+      ? trips
+      : filter === "active"
+      ? trips.filter((trip) => trip.status === "active")
+      : trips.filter((trip) => trip.status === "inactive");
 
-  const handleAddTrip = () => {
-    if (
-      !regionRef.current?.value ||
-      !fromRef.current?.value ||
-      !toRef.current?.value ||
-      !tariffRef.current?.value
-    ) {
-      alert("Введите все значения.");
-      return;
-    }
+  const currentTrips = filteredTrips.slice(indexOfFirstItem, indexOfLastItem);
 
-    const trip: ITrip = {
-      id: trips.length + 1,
-      region: regionRef.current.value,
-      from: fromRef.current.value,
-      to: toRef.current.value,
-      tariff: tariffRef.current.value,
-    };
+  const totalPages = Math.ceil(filteredTrips.length / itemsPerPage);
 
-    store.set([trip, ...trips]);
-    setOpen(false);
+  const handleChangeFilter = (e: SelectChangeEvent) => {
+    setCurrentPage(1);
+    setFilter(e.target.value);
   };
 
   return (
@@ -91,16 +49,30 @@ const PassengerPage: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h3" sx={{ paddingBottom: "20px", textAlign: 'center' }}>
+        <Typography
+          variant="h3"
+          sx={{ paddingBottom: "20px", textAlign: "center" }}
+        >
           Страница пассажира
         </Typography>
-        <Button
-          onClick={() => setOpen(true)}
-          sx={{ alignSelf: "start", fontSize: "18px", borderRadius: "10px" }}
-          variant="contained"
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: { xs: 2, sm: 0 },
+            justifyContent: "space-between",
+          }}
         >
-          Добавить поездку
-        </Button>
+          <Button
+            onClick={() => setOpen(true)}
+            sx={{ alignSelf: "start", fontSize: "18px", borderRadius: "10px" }}
+            variant="contained"
+          >
+            Добавить поездку
+          </Button>
+          <Filter filter={filter} handleChangeFilter={handleChangeFilter} />
+        </Box>
         {currentTrips.map((trip) => (
           <TripCard
             key={trip.id}
@@ -111,111 +83,18 @@ const PassengerPage: React.FC = () => {
           />
         ))}
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            justifyContent: "center",
-            alignItems: "center",
-            gap: { xs: 2, sm: 4 },
-          }}
-        >
-          <Select
-            sx={{ order: { xs: 2, sm: 1 } }}
-            value={itemsPerPage}
-            onChange={(e) => setItemsPerPage(Number(e.target.value))}
-            displayEmpty
-            inputProps={{ "aria-label": "Without label" }}
-          >
-            <MenuItem value={5}>Пять</MenuItem>
-            <MenuItem value={10}>Десять</MenuItem>
-            <MenuItem value={20}>Двадцать</MenuItem>
-          </Select>
-          <Pagination
-            sx={{ order: { xs: 1, sm: 2 } }}
-            page={currentPage}
-            onChange={(_, page) => setCurrentPage(page)}
-            count={totalPages}
-            variant="outlined"
-            size="large"
-            shape="rounded"
-            siblingCount={0}
-          />
-        </Box>
+        <PaginationComponent
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
 
-        <Button
-          variant="outlined"
-          sx={{ margin: "50px 0px 20px" }}
-          onClick={() => navigate("/")}
-        >
-          Вернуться к выбору роли
-        </Button>
+        <PreviousButton />
       </Box>
 
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <Box sx={modalStyle}>
-          <Typography variant="h4" textAlign="center">
-            Добавить поездку
-          </Typography>
-          <Box
-            sx={{
-              width: "70%",
-              minWidth: 250,
-              marginTop: "30px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-            }}
-          >
-            <TextField
-              inputRef={regionRef}
-              label="Регион"
-              variant="outlined"
-              required
-            />
-            <TextField
-              inputRef={fromRef}
-              label="Откуда"
-              variant="outlined"
-              required
-            />
-            <TextField
-              inputRef={toRef}
-              label="Куда"
-              variant="outlined"
-              required
-            />
-            <Box>
-              <InputLabel
-                sx={{ marginBottom: 0 }}
-                variant="standard"
-                htmlFor="uncontrolled-native"
-              >
-                Тариф
-              </InputLabel>
-              <NativeSelect
-                inputRef={tariffRef}
-                defaultValue="Эконом"
-                inputProps={{
-                  name: "age",
-                  id: "uncontrolled-native",
-                }}
-              >
-                <option value="Эконом">Эконом</option>
-                <option value="Комфорт">Комфорт</option>
-                <option value="Бизнес">Бизнес</option>
-              </NativeSelect>
-            </Box>
-          </Box>
-          <Button
-            onClick={handleAddTrip}
-            variant="contained"
-            sx={{ mt: 8, width: "60%", fontSize: 18, fontWeight: "bold" }}
-          >
-            Добавить
-          </Button>
-        </Box>
-      </Modal>
+      <ModalComponent trips={trips} open={open} setOpen={setOpen} />
     </>
   );
 };
