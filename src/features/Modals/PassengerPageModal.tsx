@@ -86,7 +86,6 @@ const ModalComponent: React.FC<{
               variant="outlined"
               fullWidth
               displayEmpty
-              data-testid="region_select"
             >
               {regions.map((region) => (
                 <MenuItem key={region} value={region}>
@@ -102,12 +101,10 @@ const ModalComponent: React.FC<{
             options={addressOptions}
             inputValue={fromValue}
             onInputChange={(_, newValue) => setFromValue(newValue)}
-            data-testid="from_input"
             renderInput={(params) => (
               <TextField
                 {...params}
                 label="Откуда"
-                data-testid="from_input"
                 required
                 inputProps={{
                   ...params.inputProps,
@@ -123,7 +120,6 @@ const ModalComponent: React.FC<{
             variant="outlined"
             inputProps={{ maxLength: 200 }}
             required
-            data-testid='to_input'
           />
           <Box>
             <MyInputLabel value="Тариф" />
@@ -133,7 +129,7 @@ const ModalComponent: React.FC<{
               variant="outlined"
               fullWidth
               displayEmpty
-              data-testid='tariff_select'
+              data-testid="tariff_select"
             >
               {["Эконом", "Комфорт", "Бизнес"].map((tariff) => (
                 <MenuItem key={tariff} value={tariff}>

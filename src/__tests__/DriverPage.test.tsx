@@ -10,6 +10,7 @@ test("Завершение поездки через модальное окно
     <TripModalDriver open={true} handleClose={handleCloseMock} markAsDone={markAsDoneMock} tripId={1} />
   );
 
+  // Кнопки
   const startButton = screen.getByText("Начать поездку");
   const arriveButton = screen.getByText("На месте");
   const completeButton = screen.getByText("Завершить поездку");

@@ -13,20 +13,22 @@ test("Добавление поездки через модальное окно
     />
   );
 
-  // Работа с полем "Откуда"
+  // Поле "Откуда"
   const fromInput = screen.getByRole("combobox", { name: "Откуда" });
   fireEvent.change(fromInput, { target: { value: "Тверская улица" } });
 
-  // Работа с полем "Куда"
+  // Поле "Куда"
   const toInput = screen.getByRole("textbox", { name: "Куда" });
   fireEvent.change(toInput, { target: { value: "Красная площадь" } });
 
   // Выбор тарифа
   const tariffSelect = screen.getByTestId("tariff_select");
   fireEvent.mouseDown(tariffSelect);
-  fireEvent.click(screen.getByText("Комфорт"));
 
-  // Добавление поездки
+  await waitFor(() => screen.getByText("Эконом"));
+  fireEvent.click(screen.getByText("Эконом"));
+
+  // Нажатие кнопки добавления поездки
   const addButton = screen.getByText("Добавить");
   fireEvent.click(addButton);
 
@@ -35,7 +37,7 @@ test("Добавление поездки через модальное окно
       expect.objectContaining({
         from: "Тверская улица",
         to: "Красная площадь",
-        tariff: "Комфорт",
+        tariff: "Эконом",
       }),
     ])
   );
